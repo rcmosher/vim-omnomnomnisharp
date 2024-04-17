@@ -1,6 +1,15 @@
 # vim-omnomnomnisharp
 Exploration and documentation of a reliable C# editing setup in Vim/NeoVim
 
+* IDEs
+  * [Visual Studio](documentation/visual-studio.md)
+  * [VSCode](documentation/vscode.md)
+* True Vim
+  * Vim with OmniSharp
+  * Neovim with csharp_ls
+  * Neovim with OmniSharp
+  * Neovim with Roslyn (C# Dev Kit)
+
 ## Motivation
 Vim offers a beatiful editing experience. My current work requires I code in C#. Naturally I want to do that in Vim. Working on large code bases with such a feature filled language greatly benefits from tools like code completion, error detection, easily accessible documentaiton, etc. There are a number of options to provide these with a Vim or a Vim-like experience:
 
