@@ -1,5 +1,5 @@
-# Visual Studio
-VsCode can provide a Vim-like experience with extensions. Multiple are available.
+# VS Code
+VS Code can provide a Vim-like experience with extensions. Multiple are available.
 * [VSCodeVim](https://github.com/VSCodeVim/Vim)
 * [VSCode Neovim](https://github.com/vscode-neovim/vscode-neovim)
 There are multiple extensions for C# support.
