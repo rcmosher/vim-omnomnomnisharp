@@ -9,6 +9,11 @@ Exploration and documentation of a reliable C# editing setup in Vim/NeoVim
   * Neovim with csharp_ls
   * Neovim with OmniSharp
   * Neovim with Roslyn (C# Dev Kit)
+* Environments
+  * Linux
+  * Windows
+  * WSL
+  * Mac
 
 ## Motivation
 Vim offers a beatiful editing experience. My current work requires I code in C#. Naturally I want to do that in Vim. Working on large code bases with such a feature filled language greatly benefits from tools like code completion, error detection, easily accessible documentaiton, etc. There are a number of options to provide these with a Vim or a Vim-like experience:
@@ -33,3 +38,17 @@ Our goal is to provide documentation to help you get over these hurdles. Can we 
 ## The Vim Experience
 Some of the options just don't cut it because they don't provide the full Vim experience. But what is the Vim experience. Some aspects are objective, like missing the `:normal` command, or overriding standard keymaps out of the box. Things that will trip up experienced Vim users and make headaches for people trying to switch to Vim/NeoVim from an IDE with an extension. Other things are a little more subjective, like how you move around tabs and frames within an application. Or having to switch your brain out of Vim mode to use version control instead of having a [well crafted plugin](https://github.com/tpope/vim-fugitive) that keeps the Vim paradigm. Some things aren't even part of Vim itself, like being able to use tmux to quickly jump between different sessions that group projects. Or having easy access to standard Unix commands. Really we're talking about anything that deviates from the Vim philosphy or basic expectations of long time vim users.
 
+### What is base line functionality
+Baseline functionality ends up being quite a bit when dealing with LSPs. It will take more than just the plug-in for the language to get there so it may seem a little on the heavy side, but here's what we expect to provide in our examples.
+
+* Improved Syntax highlighting
+* Flagging errors
+* Code actions to fix errors
+* Jump to definition, implementation, uses, including definitions in nugets
+
+Other essentials:
+* Plug in management
+* [vim-sensible](https://github.com/tpope/vim-sensible) in case some decides this is enough to get them buy
+
+Maybe:
+* Finding files by name, by matching contents. A maybe as this is generically solved and not specific to C# in Vim. Though it's fairly essential and I found to be a pain in Windows which C# is likely to have more developers using.
