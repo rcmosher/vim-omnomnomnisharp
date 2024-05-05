@@ -23,11 +23,18 @@ Though I would expect that to be more obvious in error messages.
 
 
 TODO: Does this vary by linux, windows, WSL?
-TODO: Install dotnet
 TODO: On linux I'm not getting any colors, or the appearance of any Omnisharp
 functionality. Because TERM=alacritty, not xterm. Hmmm. Not sure if worth
-documenting.
+documenting. I'v emade some changes. just document.
 TODO: Document installing dotnet for different versions of SDK
+TODO: Install and try Vimspector for debugging
+TODO: Run down of functionality and what provides it.
+TODO: Install coc.nvim (or something like it) for non-C# code, and keep it from
+interfering with Omnisharp. I wonder if I have something dumb in my personal config
+that is using coc/csharp_ls in parallel with Omnisharp.
+TODO: Fugitive for my own sanity.
+TODO: Are the mappings already defined as defaults based on prefix? Still worth including
+for discoverability.
 
 ## Troubleshooting
 
