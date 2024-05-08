@@ -7,7 +7,7 @@ TODO figure out what are base essentials
 https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#scripted-install
 
 ### Plugin Manager
-Install [vim-plug](https://github.com/junegunn/vim-plug?tab=readme-ov-file#installation): 
+Install [vim-plug](https://github.com/junegunn/vim-plug?tab=readme-ov-file#installation):
 `curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
 
@@ -83,3 +83,12 @@ channel 0 open: 'Install the [8.0.200] .NET SDK or update [/home/testing/aspire/
 channel 0 open: ''
 channel 0 open: 'Learn about SDK resolution:
 ```
+
+# With coc, slow BufWritePre
+
+[coc.nvim]: Slow "BufWritePre" handler detected s
+[coc.nvim]:     at sk.on (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:58:4295)
+[coc.nvim]:     at bp.attach (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:177:4856)
+[coc.nvim]:     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[coc.nvim]:     at async vR.init (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:198:621)
+[coc.nvim]:     at async _b.init (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:281:45514)
