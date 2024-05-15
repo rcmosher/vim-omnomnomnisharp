@@ -6,6 +6,7 @@ let g:ale_sign_warning = '•'
 let g:ale_sign_info = '·'
 let g:ale_sign_style_error = '·'
 let g:ale_sign_style_warning = '·'
+let g:ale_virtualtext_cursor = 'disabled' " Hide inline errors. 'current' shows on current line, but wasn't refreshing for me.
 
 let g:ale_linters = { 'cs': ['OmniSharp'] }
 " }}}
@@ -72,7 +73,23 @@ let g:lightline#ale#indicator_ok = "\uf00c "
 " Fix msbuild issue by using more modern omnisharp
 let g:OmniSharp_server_use_net6 = 1
 
-let g:OmniSharp_popup_position = 'peek'
+" OS support
+if has('linux')
+  let lines = readfile("/proc/version")
+  " WSL
+  if lines[0] =~ "Microsoft"
+    let g:OmniSharp_translate_cygwin_wsl = 1
+    " TODO verify this auto installs
+    " Requires manual install
+    if isdirectory('/mnt/c/Omnisharp/omnisharp-linux-x64/omnisharp')
+      let g:OmniSharp_server_path = '/mnt/c/Omnisharp/omnisharp-linux-x64/omnisharp/OmniSharp.exe'
+    endif
+  endif
+endif
+
+let g:OmniSharp_popup_position = 'peek'  " TODO try different options
+let g:OmniSharp_typeLookupInPreview = 1 " Show type lookup in pop-up instead of status line. Prevents hiding other messages
+
 if has('nvim')
   let g:OmniSharp_popup_options = {
   \ 'winblend': 30,
@@ -109,18 +126,22 @@ augroup omnisharp_commands
   " Show type information automatically when the cursor stops moving.
   " Note that the type is echoed to the Vim command line, and will overwrite
   " any other messages in this space including e.g. ALE linting messages.
-  autocmd CursorHold *.cs OmniSharpTypeLookup
+  " Or it can be configured to show as a pop-up with
+  " g:OmniSharp_typeLookupInPreview = 1
+  " Mapping <Plug>(omnisharp_type_lookup) is less annoying as you'll often get
+  " an empty type look-up
+  " autocmd CursorHold *.cs OmniSharpTypeLookup
 
   " The following commands are contextual, based on the cursor position.
   autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osfu <Plug>(omnisharp_find_usages)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osfi <Plug>(omnisharp_find_implementations)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>fu <Plug>(omnisharp_find_usages)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>fi <Plug>(omnisharp_find_implementations)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>pd <Plug>(omnisharp_preview_definition)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>pi <Plug>(omnisharp_preview_implementations)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ht <Plug>(omnisharp_type_lookup)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>hd <Plug>(omnisharp_documentation)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>fs <Plug>(omnisharp_find_symbol)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xu <Plug>(omnisharp_fix_usings)
   autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
   autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
 
@@ -130,15 +151,21 @@ augroup omnisharp_commands
   " Find all code errors/warnings for the current solution and populate the quickfix window
   autocmd FileType cs nmap <silent> <buffer> <Leader>osgcc <Plug>(omnisharp_global_code_check)
   " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
-  autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xf <Plug>(omnisharp_code_actions)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>xf <Plug>(omnisharp_code_actions)
   " Repeat the last code action performed (does not use a selector)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
-  autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>x. <Plug>(omnisharp_code_action_repeat)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>x. <Plug>(omnisharp_code_action_repeat)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xc <Plug>(omnisharp_code_format)
 
-  autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
+  " TODO review ALE for options not included here
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xn <Plug>(ale_next_wrap)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xp <Plug>(ale_previous_wrap)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xe <Plug>(ale_next_wrap_error)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xE <Plug>(ale_previous_wrap_error)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>xh <Plug>(ale_documentation)
 
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osnm <Plug>(omnisharp_rename)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>rn <Plug>(omnisharp_rename)
 
   autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
   autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)

@@ -1,7 +1,8 @@
 " Copied from https://github.com/OmniSharp/omnisharp-vim/wiki/Example-config
 
 " Set this to 1 to use ultisnips for snippet handling
-let g:using_snippets = 0
+let g:using_snippets = 0 " TODO plugs in variable names and types. Need to learn how to navigate. Probably just UltiSnip shortcuts
+" not really my favorite, but can document how to use.
 
 let s:path = expand('<sfile>:p:h') . '/'
 
@@ -9,7 +10,9 @@ function Source(filename)
   execute 'source '.fnameescape(s:path . a:filename)
 endfunction
 
+call plug#begin('~/.vim/plugged')
 call Source('plugins.vim')
+call plug#end()
 
 call Source('settings.vim')
 

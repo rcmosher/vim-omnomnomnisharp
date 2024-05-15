@@ -32,3 +32,6 @@ set signcolumn=yes
 
 set mouse=a
 set updatetime=1000
+
+" Escape doesn't wait for ttimeoutlen to close fzf popup
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
