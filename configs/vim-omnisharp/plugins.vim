@@ -1,5 +1,3 @@
-"
-call plug#begin('~/.vim/plugged')
 
 Plug 'OmniSharp/omnisharp-vim'
 
@@ -28,5 +26,3 @@ Plug 'maximbaz/lightline-ale'
 if g:using_snippets
   Plug 'sirver/ultisnips'
 endif
-
-call plug#end()

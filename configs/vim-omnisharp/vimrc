@@ -9,7 +9,9 @@ function Source(filename)
   execute 'source '.fnameescape(s:path . a:filename)
 endfunction
 
+call plug#begin('~/.vim/plugged')
 call Source('plugins.vim')
+call plug#end()
 
 call Source('settings.vim')
 
