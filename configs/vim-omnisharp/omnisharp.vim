@@ -1,5 +1,4 @@
 " Omnisharp and supporting configuration
-" TODO detect WSL
 
 " ALE: {{{
 let g:ale_sign_error = '•'
