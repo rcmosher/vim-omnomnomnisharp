@@ -7,6 +7,7 @@ let g:ale_sign_warning = '•'
 let g:ale_sign_info = '·'
 let g:ale_sign_style_error = '·'
 let g:ale_sign_style_warning = '·'
+let g:ale_virtualtext_cursor = 'disabled' " Hide inline errors. 'current' shows on current line, but wasn't refreshing for me.
 
 let g:ale_linters = { 'cs': ['OmniSharp'] }
 " }}}
@@ -86,6 +87,10 @@ if has('linux')
     endif
   endif
 endif
+
+let g:OmniSharp_popup_position = 'peek'  " TODO try different options
+let g:OmniSharp_typeLookupInPreview = 1 " Show type lookup in pop-up instead of status line. Prevents hiding other messages
+
 if has('nvim')
   let g:OmniSharp_popup_options = {
   \ 'winblend': 30,
@@ -122,7 +127,11 @@ augroup omnisharp_commands
   " Show type information automatically when the cursor stops moving.
   " Note that the type is echoed to the Vim command line, and will overwrite
   " any other messages in this space including e.g. ALE linting messages.
-  autocmd CursorHold *.cs OmniSharpTypeLookup
+  " Or it can be configured to show as a pop-up with
+  " g:OmniSharp_typeLookupInPreview = 1
+  " Mapping <Plug>(omnisharp_type_lookup) is less annoying as you'll often get
+  " an empty type look-up
+  " autocmd CursorHold *.cs OmniSharpTypeLookup
 
   " The following commands are contextual, based on the cursor position.
   autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
