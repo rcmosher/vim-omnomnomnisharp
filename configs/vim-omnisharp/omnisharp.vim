@@ -1,4 +1,5 @@
 " Omnisharp and supporting configuration
+" TODO detect WSL
 
 " ALE: {{{
 let g:ale_sign_error = '•'
@@ -72,7 +73,19 @@ let g:lightline#ale#indicator_ok = "\uf00c "
 " Fix msbuild issue by using more modern omnisharp
 let g:OmniSharp_server_use_net6 = 1
 
-let g:OmniSharp_popup_position = 'peek'
+" OS support
+if has('linux')
+  let lines = readfile("/proc/version")
+  " WSL
+  if lines[0] =~ "Microsoft"
+    let g:OmniSharp_translate_cygwin_wsl = 1
+    " TODO verify this auto installs
+    " Requires manual install
+    if isdirectory('/mnt/c/Omnisharp/omnisharp-linux-x64/omnisharp')
+      let g:OmniSharp_server_path = '/mnt/c/Omnisharp/omnisharp-linux-x64/omnisharp/OmniSharp.exe'
+    endif
+  endif
+endif
 if has('nvim')
   let g:OmniSharp_popup_options = {
   \ 'winblend': 30,
