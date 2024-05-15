@@ -1,4 +1,5 @@
 # Omnisharp-Vim
+TODO Document and provide examples for omnisharp configuration
 
 ## Prequisites
 
@@ -84,7 +85,7 @@ channel 0 open: ''
 channel 0 open: 'Learn about SDK resolution:
 ```
 
-# With coc, slow BufWritePre
+### With coc, slow BufWritePre
 
 [coc.nvim]: Slow "BufWritePre" handler detected s
 [coc.nvim]:     at sk.on (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:58:4295)
@@ -92,3 +93,62 @@ channel 0 open: 'Learn about SDK resolution:
 [coc.nvim]:     at processTicksAndRejections (node:internal/process/task_queues:96:5)
 [coc.nvim]:     at async vR.init (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:198:621)
 [coc.nvim]:     at async _b.init (/home/rmosher/vimfiles/plugged/coc.nvim/build/index.js:281:45514)
+
+### WSL Package Resolver Exception
+Use `let g:OmniSharp_translate_cygwin_wsl = 1`
+
+[fail]: OmniSharp.MSBuild.ProjectLoader
+        The "ResolvePackageAssets" task failed unexpectedly.
+NuGet.Packaging.Core.PackagingException: Unable to find fallback package folder 'C:\Program Files\dotnet\sdk\NuGetFallbackFolder'.
+   at NuGet.Packaging.FallbackPackagePathResolver..ctor(String userPackageFolder, IEnumerable`1 fallbackPackageFolders)
+   at Microsoft.NET.Build.Tasks.NuGetPackageResolver.CreateResolver(IEnumerable`1 packageFolders)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.CacheWriter..ctor(ResolvePackageAssets task)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.CacheReader.CreateReaderFromDisk(ResolvePackageAssets task, Byte[] settingsHash)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.CacheReader..ctor(ResolvePackageAssets task)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.ReadItemGroups()
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.ExecuteCore()
+   at Microsoft.NET.Build.Tasks.TaskBase.Execute()
+   at Microsoft.Build.BackEnd.TaskExecutionHost.Microsoft.Build.BackEnd.ITaskExecutionHost.Execute()
+   at Microsoft.Build.BackEnd.TaskBuilder.ExecuteInstantiatedTask(ITaskExecutionHost taskExecutionHost, TaskLoggingContext taskLoggingContext, TaskHost taskHost, ItemBucket bucket, TaskExecutionMode howToExecuteTask)
+
+[warn]: OmniSharp.MSBuild.ProjectManager
+        Failed to load project file '/mnt/c/Development/Thycotic/Enza/Thycotic.Enza/src/Thycotic.Enza.Web/Thycotic.Enza.Web.csproj'.
+/mnt/c/Development/src/x.csproj
+/home/user/.dotnet/sdk/8.0.204/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): Error: The "ResolvePackageAssets" task failed unexpectedly.
+NuGet.Packaging.Core.PackagingException: Unable to find fallback package folder 'C:\Program Files\dotnet\sdk\NuGetFallbackFolder'.
+   at NuGet.Packaging.FallbackPackagePathResolver..ctor(String userPackageFolder, IEnumerable`1 fallbackPackageFolders)
+   at Microsoft.NET.Build.Tasks.NuGetPackageResolver.CreateResolver(IEnumerable`1 packageFolders)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.CacheWriter..ctor(ResolvePackageAssets task)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.CacheReader.CreateReaderFromDisk(ResolvePackageAssets task, Byte[] settingsHash)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.CacheReader..ctor(ResolvePackageAssets task)
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.ReadItemGroups()
+   at Microsoft.NET.Build.Tasks.ResolvePackageAssets.ExecuteCore()
+   at Microsoft.NET.Build.Tasks.TaskBase.Execute()
+   at Microsoft.Build.BackEnd.TaskExecutionHost.Microsoft.Build.BackEnd.ITaskExecutionHost.Execute()
+   at Microsoft.Build.BackEnd.TaskBuilder.ExecuteInstantiatedTask(ITaskExecutionHost taskExecutionHost, TaskLoggingContext taskLoggingContext, TaskHost taskHost, ItemBucket bucket, TaskExecutionMode howToExecuteTask)
+
+### WSl Auto install fails to run
+Did a manual install and pointed to that.
+`let g:OmniSharp_server_path = '...'`
+
+### ALE jumping to error goes to line after
+
+### FZF escape is not quitting out of the pop-up the 1st time.
+Seems to be a long timeout
+
+https://github.com/junegunn/fzf/issues/1393#issuecomment-426576577
+
+### Attributes trying to add attribute to completion
+
+### Completion plug in params, type params, without easy override
+
+### Messages Disappers
+OmniSharp can preview type information. By default this shows in the status line, which can hide other important messages. Show in a pop-up with:
+`let g:OmniSharp_typeLookupInPreview = 1`
+
+However, this will frequently show an empty pop-up TODO
+
+Comment out this line if you have it to stop automatically showing:
+`autocmd CursorHold *.cs OmniSharpTypeLookup`
+
+### Showing information at bottom, but gets erased almost immediately
